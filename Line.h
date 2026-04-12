@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "Point.h"
 #include "Color.h"
 #include "LineStyle.h"
