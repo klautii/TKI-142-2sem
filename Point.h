@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <iostream>
 #include <limits>
 
@@ -10,15 +10,40 @@ using namespace std;
  * сравнение, ввод/вывод.
  */
 class Point {
-public:
-    int x, y;
+private:
+    int x, y;  // Теперь в private
 
+public:
     /**
      * @brief Конструктор точки
      * @param x Координата X (по умолчанию 0)
      * @param y Координата Y (по умолчанию 0)
      */
     Point(int x = 0, int y = 0);
+
+    /**
+     * @brief Получить координату X
+     * @return Значение X
+     */
+    int GetX() const { return x; }
+    
+    /**
+     * @brief Получить координату Y
+     * @return Значение Y
+     */
+    int GetY() const { return y; }
+    
+    /**
+     * @brief Установить координату X
+     * @param value Новое значение X
+     */
+    void SetX(int value) { x = value; }
+    
+    /**
+     * @brief Установить координату Y
+     * @param value Новое значение Y
+     */
+    void SetY(int value) { y = value; }
 
     /**
      * @brief Оператор сравнения точек на равенство.
