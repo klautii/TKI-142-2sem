@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <iostream>
 #include <string>
 
@@ -22,7 +22,7 @@ enum class LineType {
 class LineStyle {
 private:
     LineType type;
-    int thickness;  // целое число больше нуля
+    int thickness;
 
 public:
     /**
@@ -37,7 +37,7 @@ public:
      * @param thick Толщина линии (>0).
      * @throw invalid_argument Если толщина <= 0.
      */
-    LineStyle(LineType t, int thick);
+    LineStyle(const LineType t, const int thick);
 
     /**
      * @brief Получить тип линии.
@@ -55,14 +55,14 @@ public:
      * @brief Установить тип линии.
      * @param t Новый тип линии.
      */
-    void SetType(LineType t) { type = t; }
+    void SetType(const LineType t);
 
     /**
      * @brief Установить толщину линии.
      * @param thick Новая толщина (>0).
      * @throw invalid_argument Если толщина <= 0.
      */
-    void SetThickness(int thick);
+    void SetThickness(const int thick);
 
     /**
      * @brief Преобразовать тип линии в строку.
