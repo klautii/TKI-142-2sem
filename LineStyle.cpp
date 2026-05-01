@@ -1,4 +1,4 @@
-﻿#include "LineStyle.h"
+#include "LineStyle.h"
 #include <limits>
 #include <stdexcept>
 
@@ -6,11 +6,15 @@ using namespace std;
 
 LineStyle::LineStyle() : type(LineType::Solid), thickness(1) {}
 
-LineStyle::LineStyle(LineType t, int thick) : type(t) {
+LineStyle::LineStyle(const LineType t, const int thick) : type(t) {
     SetThickness(thick);
 }
 
-void LineStyle::SetThickness(int thick) {
+void LineStyle::SetType(const LineType t) {
+    type = t;
+}
+
+void LineStyle::SetThickness(const int thick) {
     if (thick <= 0) {
         throw invalid_argument("Толщина должна быть больше 0");
     }
