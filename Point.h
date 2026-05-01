@@ -11,7 +11,7 @@ using namespace std;
  */
 class Point {
 private:
-    int x, y;  // Теперь в private
+    int x, y;
 
 public:
     /**
@@ -19,7 +19,7 @@ public:
      * @param x Координата X (по умолчанию 0)
      * @param y Координата Y (по умолчанию 0)
      */
-    Point(int x = 0, int y = 0);
+    Point(const int x = 0, const int y = 0);
 
     /**
      * @brief Получить координату X
@@ -37,13 +37,13 @@ public:
      * @brief Установить координату X
      * @param value Новое значение X
      */
-    void SetX(int value) { x = value; }
+    void SetX(const int value);
     
     /**
      * @brief Установить координату Y
      * @param value Новое значение Y
      */
-    void SetY(int value) { y = value; }
+    void SetY(const int value);
 
     /**
      * @brief Оператор сравнения точек на равенство.
