@@ -2,7 +2,15 @@
 
 using namespace std;
 
-Point::Point(int x, int y) : x(x), y(y) {}
+Point::Point(const int x, const int y) : x(x), y(y) {}
+
+void Point::SetX(const int value) { 
+    x = value; 
+}
+
+void Point::SetY(const int value) { 
+    y = value; 
+}
 
 bool Point::operator==(const Point& other) const {
     return x == other.x && y == other.y;
