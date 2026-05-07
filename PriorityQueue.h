@@ -1,4 +1,5 @@
-﻿#pragma once﻿
+#pragma once
+
 #include <initializer_list>
 #include <utility>
 #include <string>
@@ -21,7 +22,7 @@ private:
          * @param val Значение элемента
          * @param prio Приоритет элемента
          */
-        Node(int prio) : priority(prio), next(nullptr), prev(nullptr) {}
+        Node(int val, int prio) : value(val), priority(prio), next(nullptr), prev(nullptr) {}
     };
 
     Node* head;
@@ -29,7 +30,6 @@ private:
     size_t size;
 
 public:
-
     /**
      * @brief Конструктор по умолчанию
      */
@@ -48,9 +48,9 @@ public:
     PriorityQueue(const PriorityQueue& other);
 
     /**
-    * @brief Конструктор перемещения
-    * @param other Очередь для перемещения
-    */
+     * @brief Конструктор перемещения
+     * @param other Очередь для перемещения
+     */
     PriorityQueue(PriorityQueue&& other) noexcept;
 
     /**
@@ -115,9 +115,9 @@ public:
     bool peekMin(int& value) const;
 
     /**
-    * @brief Проверка очереди на пустоту
-    * @return true если очередь пуста, false в противном случае
-    */
+     * @brief Проверка очереди на пустоту
+     * @return true если очередь пуста, false в противном случае
+     */
     bool isEmpty() const;
 
     /**
