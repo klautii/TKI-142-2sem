@@ -1,16 +1,18 @@
-﻿#include "PriorityQueue.h"
-#include <string>
-#include <algorithm>
+#include "PriorityQueue.h"
+#include <stdexcept>
+#include <sstream>
 
 PriorityQueue::PriorityQueue() : head(nullptr), tail(nullptr), size(0) {}
 
-PriorityQueue::PriorityQueue(std::initializer_list<std::pair<int, int>> initList) : PriorityQueue() {
-    for (const auto& pair : initList) {
-        push(pair.first, pair.second);
+PriorityQueue::PriorityQueue(initializer_list<pair<int, int>> initList) 
+    : head(nullptr), tail(nullptr), size(0) {
+    for (const auto& item : initList) {
+        push(item.first, item.second);
     }
 }
 
-PriorityQueue::PriorityQueue(const PriorityQueue& other) : PriorityQueue() {
+PriorityQueue::PriorityQueue(const PriorityQueue& other) 
+    : head(nullptr), tail(nullptr), size(0) {
     Node* current = other.head;
     while (current != nullptr) {
         push(current->value, current->priority);
@@ -54,84 +56,80 @@ PriorityQueue& PriorityQueue::operator=(PriorityQueue&& other) noexcept {
     return *this;
 }
 
-PriorityQueue& PriorityQueue::operator<<(const std::pair<int, int>& element) {
-    push(element.first, element.second);
-    return *this;
-}
-
-PriorityQueue& PriorityQueue::operator>>(std::pair<int, int>& element) {
-    if (!isEmpty()) {
-        element.first = head->value;
-        element.second = head->priority;
-        popMax(element.first);
-    }
-    return *this;
-}
-
 void PriorityQueue::push(int value, int priority) {
-    Node* newNode = new Node(priority);
-
-    if (head == nullptr) {
+    Node* newNode = new Node(value, priority);
+    
+    if (isEmpty()) {
         head = tail = newNode;
-    }
-    else {
+    } else if (priority > head->priority) {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    } else if (priority <= tail->priority) {
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    } else {
         Node* current = head;
-        Node* prev = nullptr;
-
-        while (current != nullptr && current->priority >= priority) {
-            prev = current;
+        while (current != nullptr && current->priority > priority) {
             current = current->next;
         }
-
-        if (prev == nullptr) {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
-        }
-        else if (current == nullptr) {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
-        }
-        else {
-            prev->next = newNode;
-            newNode->prev = prev;
-            newNode->next = current;
-            current->prev = newNode;
-        }
+        newNode->prev = current->prev;
+        newNode->next = current;
+        current->prev->next = newNode;
+        current->prev = newNode;
     }
     size++;
 }
 
+PriorityQueue& PriorityQueue::operator<<(const pair<int, int>& element) {
+    push(element.first, element.second);
+    return *this;
+}
+
 bool PriorityQueue::popMax(int& value) {
-    if (head == nullptr) {
+    if (isEmpty()) {
         return false;
     }
-
+    
     value = head->value;
     Node* temp = head;
     head = head->next;
-
+    
     if (head != nullptr) {
         head->prev = nullptr;
-    }
-    else {
+    } else {
         tail = nullptr;
     }
-
+    
     delete temp;
     size--;
     return true;
 }
 
+PriorityQueue& PriorityQueue::operator>>(pair<int, int>& element) {
+    if (isEmpty()) {
+        throw runtime_error("Cannot extract from empty queue");
+    }
+    
+    element.first = head->value;
+    element.second = head->priority;
+    popMax(element.first);
+    return *this;
+}
+
 bool PriorityQueue::peekMax(int& value) const {
-    if (isEmpty()) return false;
+    if (isEmpty()) {
+        return false;
+    }
     value = head->value;
     return true;
 }
 
 bool PriorityQueue::peekMin(int& value) const {
-    if (isEmpty()) return false;
+    if (isEmpty()) {
+        return false;
+    }
     value = tail->value;
     return true;
 }
@@ -144,23 +142,24 @@ size_t PriorityQueue::getSize() const {
     return size;
 }
 
-std::string PriorityQueue::toString() const {
-    std::string result;
+string PriorityQueue::toString() const {
+    stringstream ss;
+    ss << "[";
     Node* current = head;
     while (current != nullptr) {
-        result += "(" + std::to_string(current->value) + ", " +
-            std::to_string(current->priority) + ")";
+        ss << "(" << current->value << "," << current->priority << ")";
         if (current->next != nullptr) {
-            result += " -> ";
+            ss << " ";
         }
         current = current->next;
     }
-    return result;
+    ss << "]";
+    return ss.str();
 }
 
 void PriorityQueue::clear() {
     while (!isEmpty()) {
-        int temp;
-        popMax(temp);
+        int dummy;
+        popMax(dummy);
     }
 }
