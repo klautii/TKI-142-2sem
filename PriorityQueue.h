@@ -91,7 +91,7 @@ public:
      * @param value Значение элемента
      * @param priority Приоритет элемента
      */
-    void push(const int value, int priority);
+    void push(const int value, const int priority);
 
     /**
      * @brief Извлечение элемента с максимальным приоритетом
